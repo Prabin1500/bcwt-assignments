@@ -8,7 +8,7 @@ img.addEventListener('click', (evt) => {
 const getCat = async () => {
   const response = await fetch('./catinfo');
   const json = await response.json();
-  document.querySelector('h2').innerHTML = json.name;
+  document.querySelector('h1').innerHTML = json.name;
   document.querySelector('p:nth-of-type(1)').innerHTML = `Birthdate: ${json.birthdate}`;
   document.querySelector('p:nth-of-type(2)').innerHTML = `Weight: ${json.weight} kgs`;
 };

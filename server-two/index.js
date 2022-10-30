@@ -14,28 +14,27 @@ app.set('view engine', 'pug');
 //    res.send('Hello World!')
 // });
 
+// app.get('/catinfo', (req, res) => {
+//   const cat = {
+//     name: "Frank \'the cat\'",
+//     birthdate: "2021-12-02",
+//     weight: 25,
+//   };
+//   res.json(cat);
+// });
+
 app.get('/catinfo', (req, res) => {
-  const cat = {
-    name: "Frank \'the cat\'",
-    birthdate: "2021-12-02",
-    weight: 19,
-  };
-  res.json(cat);
-});
-
-app.get('/test', (request, response) => {
-  console.log('Someone is trying to test me.');
-  requestCounter++;
-
-  // Example of using pug
-  response.render('test', {
-    title: "Pug test page",
-    header1: "Pug test page",
-    header2: "Counter",
-    exampleText: "Page requested " + requestCounter + " times.",
+  console.log('Trying to get catinfo');
+ 
+  res.render('catinfo', {
+    title:  "Frank \'the cat\'",
+    header1: "Frank \'the cat\'",
+    birthday: "birthday : 2021-12-02",
+    weight: "weight : 20",
   });
 
 });
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
