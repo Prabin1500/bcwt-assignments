@@ -23,7 +23,8 @@ const modifyCat = (req, res) => {
 };
 
 const createCat =  (req, res) => {
-    
+    console.log(req.body);
+    res.send("adding a cat");
 };
 
 const deleteCat =  (req, res) => {

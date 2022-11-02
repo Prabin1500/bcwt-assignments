@@ -25,9 +25,25 @@ const getUser = (req,res) => {
     }else{
         res.sendStatus(404);
     }
-}
+};
+
+const modifyUser = (req, res) => {
+    
+};
+
+const createUser =  (req, res) => {
+    const message = `username: ${req.body.name}, email: ${req.body.email}`;
+    res.send(message);
+};
+
+const deleteUser =  (req, res) => {
+    
+};
 
 module.exports = {
     getUser,
     getUsers,
+    createUser,
+    deleteUser,
+
 }
