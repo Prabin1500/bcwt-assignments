@@ -3,21 +3,20 @@
 
 
 const userModel = require('../models/userModel');
+const { use } = require('../routes/catRoute');
 
-const users = userModel.users;
-
-const getUsers = (req, res) => {
-    users.map(user =>{
+const getUsers = async (req, res) => {
+    const users = await userModel.getAllUsers();
+    users.map(user => {
         delete user.password;
         return user;
     });
-
     res.json(users);
 };
 
-const getUser = (req,res) => {
+const getUser = async (req,res) => {
     //choose only one user with matching id
-    const user = users.filter(user => req.params.userId == user.id)[0];
+    const user = await userModel.getUserById(res, req.params.userId);
 
     if(user){
         delete user.password;
@@ -31,8 +30,9 @@ const modifyUser = (req, res) => {
     
 };
 
-const createUser =  (req, res) => {
-    const message = `username: ${req.body.name}, email: ${req.body.email}`;
+const createUser = async (req, res) => {
+    const message = `username: ${req.body.name}, email: ${req.body.email}, password: ${req.body.password}`;
+    userModel.addUser(req.body.name, req.body.email, req.body.password);
     res.send(message);
 };
 
@@ -43,6 +43,7 @@ const deleteUser =  (req, res) => {
 module.exports = {
     getUser,
     getUsers,
+    modifyUser,
     createUser,
     deleteUser,
 

@@ -12,13 +12,13 @@ router.get('/',catController.getCats);
 
 router.get('/:catId', catController.getCat);
 
-  router.post('/',uploads.single('cat'), catController.createCat);
+router.post('/',uploads.single('cat'), catController.createCat);
 
-  router.put('/', (req, res) => {
-    res.send('From this endpoint you can edit cats.');
-  });
-  router.delete('/', (req, res) => {
-    res.send('From this endpoint you can delete cats.');
-  });
+router.put('/', (req, res) => {
+  res.send('From this endpoint you can edit cats.');
+});
+router.delete('/', (req, res) => {
+  res.send('From this endpoint you can delete cats.');
+});
   
-  module.exports = router;
+module.exports = router;
