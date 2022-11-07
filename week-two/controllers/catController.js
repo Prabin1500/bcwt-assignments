@@ -23,9 +23,11 @@ const modifyCat = (req, res) => {
     
 };
 
-const createCat =  (req, res) => {
-    console.log(req.body);
-    res.send("adding a cat");
+const createCat = async (req, res) => {
+    const cat = req.body;
+    cat.filename = req.file.filename;
+    const id = await catModel.addCat(cat, res);
+    res.send("Success")
 };
 
 const deleteCat =  (req, res) => {

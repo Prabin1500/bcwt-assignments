@@ -26,15 +26,18 @@ const getUserById = async (res, userId) => {
   }
 };
 
-const addUser = (name,email,password) => {
-
-      var sql = "INSERT INTO wop_user (name, email, password) VALUES ?";
-      var values = [
-        [name, email, password]
-      ];
-      console.log(name);
-      promisePool.query(sql, [values]);
+const addUser = async (user, res) => {
+  try {
+    const [rows] = await promisePool.query('INSERT INTO wop_user(name, email, password) VALUES (?,?,?)', [user.name, user.email, user.password]);
+    console.log('user model insert', rows);
+    return rows.insertId;
+  } catch (e) {
+    console.error('user model addUser error', e.message);
+    res.status(500).json({ message: 'something went wrong'});
+    return;
+  }
 };
+
 
 module.exports = {
   getAllUsers,

@@ -31,9 +31,10 @@ const modifyUser = (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    const message = `username: ${req.body.name}, email: ${req.body.email}, password: ${req.body.password}`;
-    userModel.addUser(req.body.name, req.body.email, req.body.password);
-    res.send(message);
+    //const message = `username: ${req.body.name}, email: ${req.body.email}, password: ${req.body.password}`;
+    const user = req.body;
+    const id = await userModel.addUser(user, res);
+    //res.send("Success");
 };
 
 const deleteUser =  (req, res) => {

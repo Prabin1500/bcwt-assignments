@@ -25,7 +25,21 @@ const getCatById = async (res, catId) => {
   }
 };
 
+const addCat = async (cat, res) => {     
+  try {
+    const [rows] = await promisePool.query('INSERT INTO wop_cat(name, weight, owner, filename, birthdate) VALUES (?, ?, ?, ?, ?)', [cat.name, cat.weight, cat.owner, cat.filename, cat.birthdate]);
+    console.log('cat model insert', rows);
+    return rows.insertId;
+  } catch (e) {
+    console.error('cat model addCat error', e.message);
+    res.status(500).json({ message: 'something went wrong'});
+    return ;
+  }
+};
+
+
 module.exports = {
   getAllCats,
   getCatById,
+  addCat,
 };
