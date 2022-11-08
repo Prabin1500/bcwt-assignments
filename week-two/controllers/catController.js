@@ -30,8 +30,9 @@ const createCat = async (req, res) => {
     res.send("Success")
 };
 
-const deleteCat =  (req, res) => {
-    
+const deleteCat = async (req, res) => {
+    const deleteCat = await catModel.deleteCat(req,res);
+    res.send("Deleted a cat");
 };
 
 module.exports = {
