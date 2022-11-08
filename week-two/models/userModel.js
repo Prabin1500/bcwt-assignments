@@ -28,12 +28,12 @@ const getUserById = async (res, userId) => {
 
 const addUser = async (user, res) => {
   try {
-    const [rows] = await promisePool.query('INSERT INTO wop_user(name, email, password) VALUES (?,?,?)', [user.name, user.email, user.password]);
+    const [rows] = await promisePool.query('INSERT INTO wop_user(name, email, password) VALUE (?,?,?)', [user.name, user.email, user.passwd]);
     console.log('user model insert', rows);
     return rows.insertId;
   } catch (e) {
-    console.error('user model addUser error', e.message);
-    res.status(500).json({ message: 'something went wrong'});
+
+    res.status(501).json({ message: 'something went wrong'});
     return;
   }
 };
