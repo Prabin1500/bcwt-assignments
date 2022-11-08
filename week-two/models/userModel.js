@@ -28,13 +28,22 @@ const getUserById = async (res, userId) => {
 
 const addUser = async (user, res) => {
   try {
-    const [rows] = await promisePool.query('INSERT INTO wop_user(name, email, password) VALUE (?,?,?)', [user.name, user.email, user.passwd]);
+    const [rows] = await promisePool.query('INSERT INTO wop_user(name, email, password) VALUES (?,?,?)', [user.name, user.email, user.passwd]);
     console.log('user model insert', rows);
     return rows.insertId;
   } catch (e) {
-
     res.status(501).json({ message: 'something went wrong'});
     return;
+  }
+};
+
+const deleteUser = async (req, userId) => {
+  try{
+    const [rows] = await promisePool.execute("DELETE FROM wop_user WHERE user_id = ?" , [userId]);
+    console.log("Deleted a user");
+    return rows[0];
+  }catch(e){
+    console.error('user delete errot error', e.message);
   }
 };
 
@@ -43,4 +52,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   addUser,
+  deleteUser,
 }

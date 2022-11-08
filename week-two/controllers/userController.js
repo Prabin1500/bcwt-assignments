@@ -33,12 +33,14 @@ const modifyUser = (req, res) => {
 const createUser = async (req, res) => {
     //const message = `username: ${req.body.name}, email: ${req.body.email}, password: ${req.body.password}`;
     const user = req.body;
-    const id = await userModel.addUser(user, res);
-    //res.send("Success");
+    const result = await userModel.addUser(user, res);
+    res.send("User added.");
 };
 
-const deleteUser =  (req, res) => {
-    
+const deleteUser = async (req, res) => {
+    const deleteUserById = await userModel.deleteUser(res, req.params.userId);
+    res.send("User deleted with id: " + req.params.userId);
+    res.json(deleteUserById);
 };
 
 module.exports = {

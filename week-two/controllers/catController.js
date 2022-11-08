@@ -19,20 +19,24 @@ const getCat = async (req, res) => {
     }
 };
 
-const modifyCat = (req, res) => {
-    
+const modifyCat = async (req, res) => {
+    const cat = req.body;
+    cat.filename = req.file.filename;
+    const catid = await catModel.modifyCat(cat, res);
+    res.send("Success modifying a cat with id:" + catid);
+    res.json(catid);
 };
 
 const createCat = async (req, res) => {
     const cat = req.body;
     cat.filename = req.file.filename;
-    const id = await catModel.addCat(cat, res);
-    res.send("Success")
+    const catid = await catModel.addCat(cat, res);
+    //res.send("Success adding a cat with id:" + catid);
 };
 
 const deleteCat = async (req, res) => {
-    const deleteCat = await catModel.deleteCat(req,res);
-    res.send("Deleted a cat");
+    const deleteCatById = await catModel.deleteCat(res, req.params.catId);
+    res.send("Deleted a cat with id :" + req.params.catId);
 };
 
 module.exports = {
