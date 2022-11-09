@@ -20,11 +20,14 @@ const getCat = async (req, res) => {
 };
 
 const modifyCat = async (req, res) => {
-    const cat = req.body;
-    cat.filename = req.file.filename;
-    const catid = await catModel.modifyCat(cat, res);
-    res.send("Success modifying a cat with id:" + catid);
-    res.json(catid);
+    
+    const result = await catModel.modifyCat(res, req);
+   if(!result){
+    res.send("Cat edited.");
+   }else{
+    res.sendStatus(502);
+   }
+
 };
 
 const createCat = async (req, res) => {
@@ -35,7 +38,7 @@ const createCat = async (req, res) => {
 };
 
 const deleteCat = async (req, res) => {
-    const deleteCatById = await catModel.deleteCat(res, req.params.catId);
+    const deleteCatById = await catModel.deleteCatById(res, req.params.catId);
     res.send("Deleted a cat with id :" + req.params.catId);
 };
 

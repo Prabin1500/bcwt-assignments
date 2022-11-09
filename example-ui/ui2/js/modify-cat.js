@@ -14,6 +14,7 @@ const userList = document.querySelector('.add-owner');
 
 // add existing cat data to form
 const getCat = async (id) => {
+  console.log(id);
   const response = await fetch(url + '/cat/' + id);
   const cat = await response.json();
   const inputs = modForm.querySelectorAll('input');
@@ -22,6 +23,8 @@ const getCat = async (id) => {
   inputs[2].value = cat.weight;
   inputs[3].value = cat.cat_id;
   modForm.querySelector('select').value = cat.owner;
+  console.log(inputs[1].value);
+ 
 };
 
 // create user options to <select>

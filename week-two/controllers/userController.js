@@ -1,25 +1,18 @@
 'use strict';
 //userController
 
-
 const userModel = require('../models/userModel');
-const { use } = require('../routes/catRoute');
 
 const getUsers = async (req, res) => {
-    const users = await userModel.getAllUsers();
-    users.map(user => {
-        delete user.password;
-        return user;
-    });
+    const users = await userModel.getAllUsers(res);
     res.json(users);
 };
 
 const getUser = async (req,res) => {
     //choose only one user with matching id
-    const user = await userModel.getUserById(res, req.params.userId);
+    const user = await userModel.getUserById(req.params.userId, res);
 
     if(user){
-        delete user.password;
         res.json(user);
     }else{
         res.sendStatus(404);
