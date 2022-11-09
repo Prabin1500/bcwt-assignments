@@ -1,11 +1,13 @@
 'use strict';
 // catController
+
+const {rawListeners} = require('../database/db');
 const catModel = require('../models/catModel');
 
 const cats = catModel.cats;
 
 const getCats = async (req,res) =>{
-    const cats = await catModel.getAllCats();
+    const cats = await catModel.getAllCats(res);
     res.json(cats);
 };
 
@@ -21,22 +23,36 @@ const getCat = async (req, res) => {
 
 const modifyCat = async (req, res) => {
     const cat = req.body;
-    cat.filename = req.file.filename;
-    const catid = await catModel.modifyCat(cat, res);
-    res.send("Success modifying a cat with id:" + catid);
-    res.json(catid);
+    if(req.params.catId){
+        cat.id = req.params.catId;
+    }
+
+    const result = await catModel.modifyCatById(cat, res);
+
+    if(result.affectedRows > 0){
+        res.json({message:'cat modified' + cat.id});
+    }else{
+        res.status(404).json({message:'Nothing changed'});
+    }
+    
 };
 
 const createCat = async (req, res) => {
     const cat = req.body;
     cat.filename = req.file.filename;
-    const catid = await catModel.addCat(cat, res);
-    //res.send("Success adding a cat with id:" + catid);
+    const catId = await catModel.addCat(cat, res);
+    res.json(catId);
 };
 
 const deleteCat = async (req, res) => {
     const deleteCatById = await catModel.deleteCat(res, req.params.catId);
-    res.send("Deleted a cat with id :" + req.params.catId);
+
+    if(deleteCat){
+        res.json({message : 'cat deleted'});
+    }else{
+        res.status(404).json('Not found');
+    }
+   
 };
 
 module.exports = {
@@ -44,5 +60,5 @@ module.exports = {
     getCats,
     modifyCat,
     createCat,
-    deleteCat,
-};
+    deleteCat
+}

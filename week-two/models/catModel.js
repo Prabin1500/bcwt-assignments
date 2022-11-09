@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 const getAllCats = async (res) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
-    const [rows] = await promisePool.query("SELECT wop_cat.name, wop_cat.weight, wop_cat.owner, wop_cat.birthdate, wop_cat.filename, wop_user.name as ownername FROM wop_cat Left join wop_user on wop_cat.owner = wop_user.user_id ;");
+    const [rows] = await promisePool.query("SELECT cat_id, wop_cat.name, wop_cat.weight, wop_cat.owner, wop_cat.birthdate, wop_cat.filename, wop_user.name as ownername FROM wop_cat join wop_user on wop_cat.owner = wop_user.user_id ;");
     console.log(rows);
     return rows;
     
@@ -18,7 +18,7 @@ const getAllCats = async (res) => {
 const getCatById = async (res, catId) => {
   try {
     const [rows] = await promisePool.query("SELECT * FROM wop_cat WHERE cat_id = ?", [catId]);
-    return rows;
+    return rows[0];
   } catch (e) {
     console.error("error", e.message);
     res.status(500).send(e.message);
@@ -43,16 +43,17 @@ const deleteCat = async(res,catId) => {
     return rows[0];
   }catch(e){
     console.error('cat model deleteCat error', e.message);
+    res.status(500).send(e.message);
   }
 };
 
-const modifyCat = async (cat, res) => {
+const modifyCatById = async (cat, res) => {
   try{
-    const [rows] = await promisePool.execute("UPDATE wop_cat SET name = ?, weight = ?,owner =?, filename = ?, birthdate =? WHERE cat_id=?" , [cat.name, cat.weight, cat.owner, cat.filename, cat.birthdate]);
+    const [rows] = await promisePool.query("UPDATE wop_cat SET name = ?, weight = ?,owner =?, birthdate =? WHERE cat_id=?" , [cat.name, cat.weight, cat.owner, cat.birthdate, cat.id]);
     console.log("cat modified", rows);
-    return rows[0];
+    return rows;
   }catch(e){
-    console.error('Error while modifying cat', e.message);
+    res.status(500).json({"error": e.message});
   }
 };
 
@@ -62,5 +63,5 @@ module.exports = {
   getCatById,
   addCat,
   deleteCat,
-  modifyCat,
+  modifyCatById
 };
