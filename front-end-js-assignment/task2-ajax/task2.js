@@ -21,21 +21,45 @@ button.addEventListener('click', (event) => {
 const renderResults = (data) => {
     //clear existing results before appending new result
     results.innerHTML = '';
+
     //loop through all search results
     for(let i=0; i<data.length; i++){
+        
         const h3 = document.createElement('h3');
-        h3.textContent = data[i].show.name;
+        h3.textContent = "Name : " + data[i].show.name;
+
+        const a = document.createElement('a');
+        a.href = data[i].show.officialSite;
+        a.innerHTML = a.href;
+
+        const summary = document.createElement("p");
+        summary.innerHTML = data[i].show.summary;
+
+        const genre = document.createElement("p");
+        //genre.textContent = "Genre: " + data[i].show.genres;
+
+        for(let j = 0; j<data[i].show.genres.length ; j++){
+            genre.textContent += data[i].show.genres[j] + " | ";        
+        }
+        
+        const language = document.createElement('p');
+        language.textContent = "Language : " +  data[i].show.language;
+
         const img = document.createElement('img');
         img.src = data[i].show.image.medium;
+
+        const line = document.createElement('hr');
+
+        
         results.append(h3);
+        results.append(a);
+        results.append(genre);
+        results.append(summary);
+        results.append(language);
         results.append(img);
+        results.append(line);
+        
     }
-   const h3 = document.createElement('h3');
-   h3.textContent = data[0].show.name;
-   const img = document.createElement('img');
-   img.src = data[0].show.image.medium;
-   results.append(img);
-   results.append(h3);
 } ;
 
 const getTvSeriesData = async (name) => {
@@ -51,7 +75,3 @@ const getTvSeriesData = async (name) => {
 };
 
 
-//generic event handling
-document.addEventListener('click', (event) =>{
-    console.log('Mouse clicked somewhere on the page,', event);
-});

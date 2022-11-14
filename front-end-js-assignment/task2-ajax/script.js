@@ -16,3 +16,8 @@ const getData = async () =>{
 
 getData();
 
+
+//generic event handling
+document.addEventListener('click', (event) =>{
+    console.log('Mouse clicked somewhere on the page,', event);
+});
