@@ -2,22 +2,25 @@
 
 let dotArrayValue = [];
 
-
-for (let i = 0; i<15; i++){
-    const dot = document.createElement("div");
-    dot.className = "trail";
-    
-    dotArrayValue.push(dot);
-    document.body.appendChild(dot);
+const createTrail = () =>{
+    for (let i = 0; i<15; i++){
+        const dot = document.createElement("div");
+        dot.className = "trail";
+        dotArrayValue.push(dot);
+    }
 }
-
-let newDot = 0;
 
 const mouseTrail = (event) => {
-    dotArray[newDot].style.left = (event.pageX) + "px";
-    dotArray[newDot].style.top= (event.pageY) + "px";
-  
-    newDot = (newDot + 1)% dotArray.length;
-}
 
-document.addEventListener('mousemove', mouseMoving);
+    for (let i = 0; i < dotArrayValue.length; i++) {
+
+        dotArrayValue[i].style.left = (event.pageX) + "px";
+        dotArrayValue[i].style.top= (event.pageY) + "px";   
+        document.body.appendChild(dotArrayValue[i]);
+        
+    }  
+};
+
+createTrail();
+
+document.addEventListener('mousemove', mouseTrail);
