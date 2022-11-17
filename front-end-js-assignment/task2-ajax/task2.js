@@ -39,8 +39,20 @@ const renderResults = (data) => {
         //genre.textContent = "Genre: " + data[i].show.genres;
 
         for(let j = 0; j<data[i].show.genres.length ; j++){
-            genre.textContent += data[i].show.genres[j] + " | ";        
-        }
+
+            if(data[i].show.genres.length < 2){
+                genre.textContent = data[i].show.genres[j] ; 
+            }else{
+                if(j == data[i].show.genres.length - 1 ){
+                    genre.textContent += data[i].show.genres[j] ;
+                }else{
+                    genre.textContent += data[i].show.genres[j] + " | " ;
+                }
+               
+            }
+             
+                   
+        };
         
         const language = document.createElement('p');
         language.textContent = "Language : " +  data[i].show.language;
