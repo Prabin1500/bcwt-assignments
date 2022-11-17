@@ -47,7 +47,7 @@ const deleteCatById = async(res,catId) => {
 
 const modifyCatById = async (cat, req) => {
   try{
-    const [rows] = await promisePool.query("UPDATE wop_cat SET name = ?, weight = ?,owner =?, birthdate =? WHERE cat_id= ?" , [cat.name, cat.weight, cat.owner, cat.birthdate, cat.id]);
+    const [rows] = await promisePool.query("UPDATE wop_cat SET name = ?, weight = ?,owner =?, birthdate =? WHERE cat_id=?" , [cat.name, cat.weight, cat.owner, cat.birthdate, cat.id]);
     console.log("cat modified", rows);
     return rows[0];
   }catch(e){

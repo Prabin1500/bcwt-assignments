@@ -1,5 +1,7 @@
 'use strict';
 // catController
+
+const {rawListeners} = require('../database/db');
 const catModel = require('../models/catModel');
 const {validationResult} = require("express-validator");
 

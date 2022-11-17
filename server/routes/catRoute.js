@@ -35,6 +35,8 @@ router.post('/',
 
 router.put('/', catController.modifyCat);
 
+router.put('/:catId', catController.modifyCat);
+
 router.delete('/:catId', catController.deleteCat);
   
 module.exports = router;
