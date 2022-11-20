@@ -6,6 +6,7 @@ const router = express.Router();
 const multer = require('multer');
 const {body} = require('express-validator');
 const catController = require('../controllers/catController');
+const { ContextBuilder } = require("express-validator/src/context-builder");
 
 const fileFilter = (req, file, cb) => {
     //this function should call cb with a boolean
@@ -19,24 +20,20 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const uploads = multer({dest:'uploads/'});
+const upload = multer({dest:'uploads/'});
 
-router.get('/',catController.getCats); 
-
-router.get('/:catId', catController.getCat);
-
-router.post('/',
-    uploads.single('cat'),
-    body('name').isAlphanumeric(),
-    body('birthdate').isDate(),
-    body('weight').isFloat({min:0.1, max: 30}),
-    body('owner').isInt({min:1}),
-    catController.createCat);
-
-router.put('/', catController.modifyCat);
-
-router.put('/:catId', catController.modifyCat);
-
-router.delete('/:catId', catController.deleteCat);
+router
+    .get('/',catController.getCats)
+    .get('/:catId', catController.getCat)
+    .post('/',
+        upload.single('cat'),
+        body('name').isAlphanumeric(),
+        body('birthdate').isDate(),
+        body('weight').isFloat({min:0.1, max: 30}),
+        body('owner').isInt({min:1}),
+        catController.createCat)
+    .put('/', catController.modifyCat)
+    .put('/:catId', catController.modifyCat)    
+    .delete('/:catId', catController.deleteCat);
   
 module.exports = router;

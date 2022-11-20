@@ -18,7 +18,7 @@ const getAllCats = async (res) => {
 const getCatById = async (res, catId) => {
   try {
     const [rows] = await promisePool.query("SELECT * FROM wop_cat WHERE cat_id = ?", [catId]);
-    return rows;
+    return rows[0];
   } catch (e) {
     console.error("error", e.message);
     res.status(500).send(e.message);
@@ -45,11 +45,11 @@ const deleteCatById = async(res,catId) => {
   }
 };
 
-const modifyCatById = async (cat, req) => {
+const modifyCatById = async (cat, res) => {
   try{
     const [rows] = await promisePool.query("UPDATE wop_cat SET name = ?, weight = ?,owner =?, birthdate =? WHERE cat_id=?" , [cat.name, cat.weight, cat.owner, cat.birthdate, cat.id]);
     console.log("cat modified", rows);
-    return rows[0];
+    return rows;
   }catch(e){
     res.status(500).json({"error": e.message});
   }
