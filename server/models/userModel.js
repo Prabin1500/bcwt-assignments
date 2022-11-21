@@ -32,7 +32,7 @@ const addUser = async (user, res) => {
     console.log('user model insert', rows);
     return rows.insertId;
   } catch (e) {
-    res.status(501).json({ message: 'something went wrong'});
+    res.status(500).json({ message: 'something went wrong'});
     return;
   }
 };

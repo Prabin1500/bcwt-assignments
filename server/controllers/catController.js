@@ -59,8 +59,12 @@ const createCat = async (req, res) => {
 };
 
 const deleteCat = async (req, res) => {
-    const deleteCatById = await catModel.deleteCatById(req.params.catId, res);
-    res.send("Deleted a cat with id :" + req.params.catId);
+    const deleteCatById = await catModel.deleteCatById( res, req.params.catId);
+    if(deleteCat){
+        res.json({message : 'cat deleted'});
+    }else{
+        res.status(404).json('Not found');
+    }
 };
 
 module.exports = {
