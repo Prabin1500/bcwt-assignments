@@ -4,6 +4,7 @@
 const {rawListeners} = require('../database/db');
 const catModel = require('../models/catModel');
 const {validationResult} = require("express-validator");
+const { login } = require('./authController');
 
 const cats = catModel.cats;
 
@@ -47,6 +48,7 @@ const createCat = async (req, res) => {
         res.status(400).json({message: "file missing or invalid"});
     }else if(errors.isEmpty()){
         const cat = req.body;
+        cat.owner = req.user.user_id;
         cat.filename = req.file.filename;
         const catid = await catModel.addCat(cat, res);
         res.status(201).json({message: 'cat created', catid});
@@ -59,11 +61,11 @@ const createCat = async (req, res) => {
 };
 
 const deleteCat = async (req, res) => {
-    const deleteCatById = await catModel.deleteCatById( res, req.params.catId);
+    const deleteCatById = await catModel.deleteCatById(res, req.params.catId, req.user.user_id);
     if(deleteCat){
         res.json({message : 'cat deleted'});
     }else{
-        res.status(404).json('Not found');
+        res.status(401).json({message: 'Cat delete failed.'});
     }
 };
 

@@ -36,9 +36,9 @@ const addCat = async (cat, res) => {
   }
 };
 
-const deleteCatById = async(res,catId) => {
+const deleteCatById = async(res,catId, owner) => {
   try{
-    const [rows] = await promisePool.execute("DELETE FROM wop_cat WHERE cat_id = ?" , [catId]);
+    const [rows] = await promisePool.execute("DELETE FROM wop_cat WHERE cat_id = ? AND owner = ?" , [catId, owner]);
     return rows[0];
   }catch(e){
     console.error('cat model deleteCat error', e.message);
