@@ -10,13 +10,19 @@ const cats = catModel.cats;
 
 const getCats = async (req,res) =>{
     const cats = await catModel.getAllCats(res);
-    res.json(cats);
+    cats.map(cat => {
+        // convert birthdate date object to 'YYYY-MM-DD' string format
+        cat.birthdate = cat.birthdate.toISOString().split('T')[0];
+        return cat;
+      });
+      res.json(cats);
 };
 
 const getCat = async (req, res) => {
     //choose only one object with matching id
     const cat =  await catModel.getCatById(res, req.params.catId) ;
     if(cat){
+        cat.birthdate = cat.birthdate.toISOString().split('T')[0];
         res.json(cat);
     }else{
         res.sendStatus(404);
@@ -26,11 +32,12 @@ const getCat = async (req, res) => {
 const modifyCat = async (req, res) => {
     
     const cat = req.body;
+    const user = req.user;
     if(req.params.catId){
         cat.id = req.params.catId;
     }
 
-    const result = await catModel.modifyCatById(cat, res);
+    const result = await catModel.modifyCatById(cat,user, res);
 
     if(result.affectedRows > 0){
         res.json({message:'cat modified' + cat.id});
