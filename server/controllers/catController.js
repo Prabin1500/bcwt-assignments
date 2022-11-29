@@ -53,7 +53,7 @@ const createCat = async (req, res) => {
     if(!req.file){
         res.status(400).json({message: "file missing or invalid"});
     }else if(errors.isEmpty()){
-        //generate
+        
         await makeThumbnail(req.file.path, req.file.filename);
         const cat = req.body;
         cat.owner = req.user.user_id;

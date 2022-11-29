@@ -51,7 +51,7 @@ const deleteUser = async (req, res) => {
 };
 
 const checkToken = (req, res) => {
-    delete req.use.password;
+    delete req.user.password;
     res.json({user: req.user});
 };
 

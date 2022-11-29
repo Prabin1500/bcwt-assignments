@@ -6,6 +6,7 @@ const router = express.Router();
 const multer = require('multer');
 const {body} = require('express-validator');
 const catController = require('../controllers/catController');
+const { ContextBuilder } = require("express-validator/src/context-builder");
 
 const fileFilter = (req, file, cb) => {
     //this function should call cb with a boolean

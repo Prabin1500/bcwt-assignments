@@ -1,7 +1,7 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const {validationResult} = require('express-validator');
 const {addUser} = require('../models/userModel');
 require('dotenv').config();
@@ -18,11 +18,13 @@ const login = (req, res) => {
         req.login(user, {session:false}, (err) => {
             if(err){
                 res.render(err);
-            }
-            //don not send the 
+            } 
+            // generate a signed json web token with the contents of user object and return it in the response
+            // do not include password in token/user object when sending to client
             delete user.password;
             const token = jwt.sign(user, process.env.JWT_SECRET);
             return res.json({user,token});
+            console.log("Welcome");
         });
     })(req,res);
 };

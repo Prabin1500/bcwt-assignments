@@ -52,7 +52,7 @@ const modifyCatById = async (cat,user, res) => {
       console.log("cat modified", rows);
       
     }else{
-      const [rows] = await promisePool.query("UPDATE wop_cat SET name = ?, weight = ?, birthdate =? WHERE cat_id=? AND owner  = ?" , [cat.name, cat.weight, cat.birthdate, cat.id, user.user_id]);
+      const [rows] = await promisePool.query("UPDATE wop_cat SET name = ?, weight = ?, birthdate =? WHERE cat_id=? AND owner = ?" , [cat.name, cat.weight, cat.birthdate, cat.id, user.user_id]);
     }
   }catch(e){
     res.status(500).json({"error": e.message});
