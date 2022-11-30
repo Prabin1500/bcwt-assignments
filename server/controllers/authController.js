@@ -64,3 +64,4 @@ module.exports = {
     logout,
     register,
 };
+

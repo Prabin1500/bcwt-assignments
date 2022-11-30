@@ -27,7 +27,7 @@ const getCatById = async (res, catId) => {
 
 const addCat = async (cat, res) => {     
   try {
-    const [rows] = await promisePool.query('INSERT INTO wop_cat(name, weight, owner, filename, birthdate) VALUES (?, ?, ?, ?, ?,?)', [cat.name, cat.weight, cat.owner, cat.filename, cat.birthdate, cat.coords]);
+    const [rows] = await promisePool.query('INSERT INTO wop_cat(cat_id,name, weight, owner, filename, birthdate, coords) VALUES (?,?, ?, ?, ?, ?,?)', [null,cat.name, cat.weight, cat.owner, cat.filename, cat.birthdate, cat.coords]);
     console.log('cat model insert', rows);
     return rows.insertId;
   } catch (e) {

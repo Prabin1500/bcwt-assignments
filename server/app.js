@@ -9,7 +9,7 @@ const passport = require('./utils/passport');
 const port = 3000;
 
 app.use(express.static('uploads'));
-app.use('/thumbnail',express.static('thumbnail'));
+
 
 app.use(cors());
 app.use(express.json());

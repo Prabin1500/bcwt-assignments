@@ -10,7 +10,7 @@ const {getUserLogin} = require('../models/userModel');
 const dotenv = require('dotenv');
 dotenv.config();
 
-//locat strategy for username and password login
+//local strategy for username and password login
 passport.use(
     new Strategy(async(username, password, done) => {
         const params = [username];
