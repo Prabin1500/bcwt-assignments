@@ -5,7 +5,8 @@ const promisePool = pool.promise();
 const getAllCats = async (res) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
-    const [rows] = await promisePool.query("SELECT cat_id, wop_cat.name, wop_cat.weight, wop_cat.owner, wop_cat.birthdate, wop_cat.filename, wop_user.name as ownername FROM wop_cat join wop_user on wop_cat.owner = wop_user.user_id");
+    const [rows] = await promisePool.query("SELECT cat_id, wop_cat.name, wop_cat.weight, wop_cat.owner, wop_cat.birthdate, wop_cat.filename, wop_user.name as ownername " +
+                  "FROM wop_cat join wop_user on wop_cat.owner = wop_user.user_id");
     console.log(rows);
     return rows;
     
@@ -27,7 +28,8 @@ const getCatById = async (res, catId) => {
 
 const addCat = async (cat, res) => {     
   try {
-    const [rows] = await promisePool.query('INSERT INTO wop_cat(cat_id,name, weight, owner, filename, birthdate, coords) VALUES (?,?, ?, ?, ?, ?,?)', [null,cat.name, cat.weight, cat.owner, cat.filename, cat.birthdate, cat.coords]);
+    const [rows] = await promisePool.query('INSERT INTO wop_cat(cat_id,name, weight, owner, filename, birthdate, coords) VALUES (?,?, ?, ?, ?, ?,?)',  
+                  [null,cat.name, cat.weight, cat.owner, cat.filename, cat.birthdate, cat.coords]);
     console.log('cat model insert', rows);
     return rows.insertId;
   } catch (e) {
